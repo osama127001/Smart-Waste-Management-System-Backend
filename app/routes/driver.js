@@ -36,4 +36,20 @@ router.post('/addDriver', (req, res) => {
     
 });
 
+router.get('/get-driver-by-region/:regionCode', (req, res) => {
+    Driver.find({ regionCode: req.params.regionCode })
+        .then((drivers) => {
+            res.status(200).json({
+                message: "Drivers Fetched!",
+                driversData: drivers
+            });
+        })
+        .catch(err => {
+            res.status(401).json({
+                message: "Drivers cannot be fetched due to an error: " + err
+            });
+        });
+});
+
+
 module.exports = router;
