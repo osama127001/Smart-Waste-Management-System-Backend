@@ -143,4 +143,5 @@ router.get('/getAdminDetails/:regionCode', (req, res) => {
         });
 });
 
+
 module.exports = router;

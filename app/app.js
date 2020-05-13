@@ -30,10 +30,12 @@ app.use((req, res, next) => {
     );
     res.setHeader(
         "Access-Control-Allow-Methods", 
-        "GET, POST, PATCH, DELETE, OPTIONS"
+        "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     );
     next();
 });
+
+
 
 // test for communication from hardware
 app.post('/test/test', (req, res) => {

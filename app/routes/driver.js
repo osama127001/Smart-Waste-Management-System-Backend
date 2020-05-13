@@ -17,7 +17,8 @@ router.post('/addDriver', (req, res) => {
                 regionCode: req.body.regionCode,
                 capacity: req.body.capacity,
                 emailId: req.body.emailId,
-                password: hashedPassword
+                password: hashedPassword,
+                isRouteAssigned: false
             });
             driver.save()
                 .then(result => {
@@ -50,6 +51,35 @@ router.get('/get-driver-by-region/:regionCode', (req, res) => {
             });
         });
 });
+
+// toggling the isRouteAssigned Property
+router.put('/toggle-route-assigned', (req, res) => {
+    Driver.findOne({emailId: req.body.emailId})
+        .then(driver => {
+            if (driver) {
+                Driver.findOneAndUpdate({emailId: req.body.emailId}, {$set: {isRouteAssigned: !driver.isRouteAssigned}}, (err, newD) => { 
+                    if (err) { 
+                        console.log(err); 
+                    } else { 
+                        console.log(newD); 
+                    } 
+                });   
+                return res.json(200).json({
+                    message: "route toggled!",
+                });       
+            } else {
+                return res.status(404).json({
+                    message: "Driver not found!"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                message: "Cannot enable route due to error: " + err
+            });
+        });
+})
+
 
 
 module.exports = router;
