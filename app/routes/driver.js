@@ -61,11 +61,11 @@ router.put('/toggle-route-assigned', (req, res) => {
                     if (err) { 
                         console.log(err); 
                     } else { 
-                        console.log(newD); 
+                        //console.log(newD); 
                     } 
                 });   
                 return res.json(200).json({
-                    message: "route toggled!",
+                    message: "route toggled!"
                 });       
             } else {
                 return res.status(404).json({

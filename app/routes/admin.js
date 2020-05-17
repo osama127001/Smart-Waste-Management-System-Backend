@@ -66,7 +66,7 @@ router.post('/adminlogin', (req, res) => {
                         user: "regionaladmin",
                         token: token,
                         expiresIn: 3600,
-                        regionData: fetchedUser
+                        regionCode: fetchedUser.regionCode
                     });
                 }
             } else {
