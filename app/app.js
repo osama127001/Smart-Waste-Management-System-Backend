@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const app = express();
 
@@ -12,7 +13,7 @@ const driverRoutes = require('./routes/driver');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const dbUrl = "mongodb+srv://Osama:WM0ZrIxDU5DliHBn@clusterswms-jovcm.mongodb.net/swms-database?retryWrites=true&w=majority";
+const dbUrl = process.env.DB_LINK;
 mongoose.connect(dbUrl, { keepAlive: 1, useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         console.log('connected to db!');
@@ -53,6 +54,9 @@ app.use('/api/driver', driverRoutes);
 app.get('/api/test', (req, res) => {
     res.json({msg: "hello"});
 });
+
+console.log(process.env);
+
 
 
 
