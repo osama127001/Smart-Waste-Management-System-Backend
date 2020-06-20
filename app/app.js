@@ -46,17 +46,18 @@ app.post('/test/test', (req, res) => {
     });
 });
 
+// returning API key for Google maps API 
+app.get('/get/api_key', (req, res) => {
+    res.status(200).json({
+        api_Key: process.env.API_KEY
+    });
+});
+
+// Routes for actors
 app.use('/api/admin', adminRoutes);
 app.use('/api/dustbin', dustbinRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/driver', driverRoutes);
-
-app.get('/api/test', (req, res) => {
-    res.json({msg: "hello"});
-});
-
-console.log(process.env);
-
 
 
 

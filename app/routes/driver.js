@@ -1,11 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const Driver = require("../models/driver");
 
 const router = express.Router();
 
-// adding driver 
+// adding driver by super-admin
 router.post('/addDriver', (req, res) => {
     bcrypt.hash(req.body.password, 10)
         .then(hashedPassword => {
@@ -37,6 +38,7 @@ router.post('/addDriver', (req, res) => {
     
 });
 
+// get all the drivers of a region by regional-admin
 router.get('/get-driver-by-region/:regionCode', (req, res) => {
     Driver.find({ regionCode: req.params.regionCode })
         .then((drivers) => {
@@ -80,6 +82,40 @@ router.put('/toggle-route-assigned', (req, res) => {
         });
 })
 
+// driver login and sending driver data from frontend
+router.post('/driverLogin', (req, res) => {
+    Driver.findOne( {emailId: req.body.email} )
+        .then((user) => {
+            if (user) {
+                fetchedUser = user;
+                return bcrypt.compare(req.body.password, user.password);
+            } else {
+                return res.status(401).json({
+                    message: "Driver Not Found, Please enter valid credentials!"
+                });
+            }
+        })
+        .then(isUser => {
+            if (isUser) {
+                const token = jwt.sign({ email: fetchedUser.email, id: fetchedUser._id }, 'Secret_Token', { expiresIn: '1h' });
+                return res.status(200).json({
+                    message: "Token Generated",
+                    user: "driver",
+                    token: token,
+                    expiresIn: 3600
+                });
+            } else {
+                return res.status(402).json({
+                    message: "Please Enter valid Password!"
+                });
+            }
+        })
+        .catch(error => {
+            res.status(404).json({
+                message: "Cannot login Due to the following error: " + error
+            });
+        });
+});
 
 
 module.exports = router;
