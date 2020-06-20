@@ -5,7 +5,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 const driverSchema = mongoose.Schema({
     name: { type: String, required: true },
     cellNo: { type: String, required: true },
-    cnic: { type: String, required: true },
+    cnic: { type: String, required: true, unique: true },
     region: { type: String, required: true },
     regionCode: { type: String, required: true },
     capacity: { type: Number, required: true },

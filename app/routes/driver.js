@@ -102,7 +102,8 @@ router.post('/driverLogin', (req, res) => {
                     message: "Token Generated",
                     user: "driver",
                     token: token,
-                    expiresIn: 3600
+                    expiresIn: 3600,
+                    email: fetchedUser.emailId
                 });
             } else {
                 return res.status(402).json({
@@ -113,6 +114,28 @@ router.post('/driverLogin', (req, res) => {
         .catch(error => {
             res.status(404).json({
                 message: "Cannot login Due to the following error: " + error
+            });
+        });
+});
+
+// get driver details by email
+router.get('/get-driver-details-by-email/:email', (req, res) => {
+    Driver.findOne({ emailId: req.params.email })
+        .then((driver) => {
+            if (driver) {
+                res.status(200).json({
+                    driverDetails: driver
+                });
+            }
+            else {
+                res.status(404).json({
+                    message: "cannot find driver!"
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(403).json({
+                message: "cannot fetch data due to the following error: " + err
             });
         });
 });
