@@ -103,7 +103,8 @@ router.post('/driverLogin', (req, res) => {
                     user: "driver",
                     token: token,
                     expiresIn: 3600,
-                    email: fetchedUser.emailId
+                    email: fetchedUser.emailId,
+                    driverRegionCode: fetchedUser.regionCode
                 });
             } else {
                 return res.status(402).json({
