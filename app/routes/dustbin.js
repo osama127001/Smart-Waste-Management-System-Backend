@@ -4,7 +4,7 @@ const Dustbin = require("../models/dustbin");
 
 const router = express.Router();
 
-// Get all dustbins
+// Get all dustbins by its region
 router.get('/:region', (req, res) => {
     Dustbin.find({ region: req.params.region })
         .then((data) => {

@@ -40,11 +40,15 @@ app.use((req, res, next) => {
 
 // test for communication from hardware
 app.post('/test/test', (req, res) => {
-    console.log(req.body);
-    res.json({
-        message: "yes"
-    });
+    console.log(req.body.level);
 });
+
+// test for server online
+app.get('/test/test', (req, res) => {
+    res.json({
+        message: "Server is online!"
+    });
+})
 
 // returning API key for Google maps API 
 app.get('/get/api_key', (req, res) => {
