@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 
 // test for communication from hardware
 app.post('/test/test', (req, res) => {
-    console.log(req.body.level);
+    console.log(req.body);
 });
 
 // test for server online

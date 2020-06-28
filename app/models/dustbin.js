@@ -7,7 +7,8 @@ const dustBinSchema = mongoose.Schema({
     region: { type: String, required: true },
     status: { type: Number, required: true },
     address: { type: String, required: true },
-    owner: { type: String, required: true }
+    owner: { type: String, required: true },
+    isInRoute: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model('Dustbin', dustBinSchema);
