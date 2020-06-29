@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const Dustbin = require("./models/dustbin");
 
 const app = express();
 
@@ -37,10 +38,20 @@ app.use((req, res, next) => {
 });
 
 
-
 // test for communication from hardware
 app.post('/test/test', (req, res) => {
-    console.log(req.body);
+    console.log('Status = ' + req.body.level);
+    console.log('Dustbin ID = ' + req.body.id);
+    res.status(200).json({
+        'message': 'Request Reached!'
+    });
+    Dustbin.findOneAndUpdate({ id: req.body.id }, { status: parseInt(req.body.level) })
+        .then((resp) => {
+            console.log('Updated');
+        })
+        .catch((err) => {
+            console.log('cannot update due to error: ' + err);
+        });
 });
 
 // test for server online
@@ -66,5 +77,3 @@ app.use('/api/driver', driverRoutes);
 
 
 module.exports = app;
-
-
