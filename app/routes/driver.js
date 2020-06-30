@@ -141,5 +141,20 @@ router.get('/get-driver-details-by-email/:email', (req, res) => {
         });
 });
 
+// deleting driver
+router.delete('/delete-driver/:email', (req, res) => {
+    console.log('test');
+    console.log('Ye -> ' + req.params.email);
+    Driver.findOneAndDelete({ emailId: req.params.email })
+        .then((result) => {
+            console.log(result);
+        })
+        .catch((err) => {
+            console.log("cannot delete driver due to the error: " + err);
+            res.status(404).json({
+                message: "cannot delete driver due to the error: " + err
+            });
+        });
+})
 
 module.exports = router;

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Dustbin = require("./models/dustbin");
+const Driver = require("./models/driver");
 
 const app = express();
 
@@ -38,6 +39,13 @@ app.use((req, res, next) => {
 });
 
 
+// Routes for actors
+app.use('/api/admin', adminRoutes);
+app.use('/api/dustbin', dustbinRoutes);
+app.use('/api/customer', customerRoutes);
+app.use('/api/driver', driverRoutes);
+
+
 // test for communication from hardware
 app.post('/test/test', (req, res) => {
     console.log('Status = ' + req.body.level);
@@ -67,12 +75,6 @@ app.get('/get/api_key', (req, res) => {
         api_Key: process.env.API_KEY
     });
 });
-
-// Routes for actors
-app.use('/api/admin', adminRoutes);
-app.use('/api/dustbin', dustbinRoutes);
-app.use('/api/customer', customerRoutes);
-app.use('/api/driver', driverRoutes);
 
 
 
