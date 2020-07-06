@@ -45,6 +45,7 @@ router.post('/add/:region', (req, res) => {
                 message: "Dustbin Added!",
                 dustbin: dBin
             });
+            console.log('dustbin Added!');
         })
         .catch(err => {
             res.json({

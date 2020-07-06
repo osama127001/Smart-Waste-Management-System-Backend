@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const Dustbin = require("./models/dustbin");
-const Driver = require("./models/driver");
 
 const app = express();
 
@@ -20,8 +19,8 @@ mongoose.connect(dbUrl, { keepAlive: 1, useNewUrlParser: true, useUnifiedTopolog
     .then(() => {
         console.log('connected to db!');
     })
-    .catch(() => {
-        console.log('not connected to db!');
+    .catch((err) => {
+        console.log('not connected to db due to the following error: ' + err);
     });
 
 
