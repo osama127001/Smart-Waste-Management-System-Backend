@@ -2,8 +2,9 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
+const Admin = require("../models/admin");
 const Customer = require("../models/customer");
+const admin = require('../models/admin');
 
 const router = express.Router();
 
@@ -83,6 +84,27 @@ router.get('/get', (req, res, next) => {
         .then(result => {
             res.json({
                 result: result
+            });
+        });
+});
+
+// returning all the regions name and coords
+router.get('/get-region-names-and-locations', (req, res) => {
+    let regionDetails = [];
+    Admin.find()
+        .then((admins) => {
+            admins.forEach(admin => {
+                if (!admin.isSuperAdmin) {
+                    regionDetails.push({regionName: admin.region, regionCode: admin.regionCode, regionLocation: admin.location});
+                }
+            });
+            return res.status(200).json({
+                regionDetails: regionDetails
+            });
+        })
+        .catch((err) => {
+            res.status(404).json({
+                message: "Cannot send details due to the following error: " + err
             });
         });
 });
