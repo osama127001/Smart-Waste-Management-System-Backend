@@ -143,5 +143,20 @@ router.get('/getAdminDetails/:regionCode', (req, res) => {
         });
 });
 
+router.delete('/delete-region/:regionalAdminCnic', (req, res) => {
+    console.log(req.params.regionalAdminCnic);
+    Admin.findOneAndDelete({cnic: req.params.regionalAdminCnic})
+        .then(data => {
+            res.status(200).json({
+                message: 'region deleted, following data is returned: ' + data
+            });
+        })
+        .catch(err => {
+            res.status(404).json({
+                message: 'cannot delete region due to the error: ' + err
+            });
+        });
+});
+
 
 module.exports = router;

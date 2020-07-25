@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const Admin = require("../models/admin");
 const Customer = require("../models/customer");
-const admin = require('../models/admin');
 
 const router = express.Router();
 
@@ -92,7 +91,7 @@ router.get('/get', (req, res, next) => {
 router.get('/get-region-names-and-locations', (req, res) => {
     let regionDetails = [];
     Admin.find()
-        .then((admins) => {
+        .then(admins => {
             admins.forEach(admin => {
                 if (!admin.isSuperAdmin) {
                     regionDetails.push({regionName: admin.region, regionCode: admin.regionCode, regionLocation: admin.location});
